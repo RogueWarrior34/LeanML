@@ -4,7 +4,7 @@
 
 # LeanML: Machine Learning Framework
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/yourusername/mlfw)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/RogueWarrior34/LeanML)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 ## Overview
@@ -127,7 +127,7 @@ int main() {
 
 ## Contributing
 
-We welcome contributions to the MLFW project. Please check the [issues](https://github.com/yourusername/mlfw/issues) for existing tasks or submit your own feature requests.
+We welcome contributions to the MLFW project. Please check the [issues](https://github.com/RogueWarrior34/LeanML/issues) for existing tasks or submit your own feature requests.
 
 ### How to Contribute
 
