@@ -139,7 +139,7 @@ We welcome contributions to the MLFW project. Please check the [issues](https://
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE]([LICENSE](https://github.com/RogueWarrior34/Java-NetFramework-Library-/blob/main/LICENSE)) file for details.
 
 ## Acknowledgments
 
