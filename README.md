@@ -1,7 +1,3 @@
-Sure, I can expand the `README.md` to include detailed descriptions and examples of various matrix and vector functions. This will help users understand how to utilize the full range of capabilities provided by your framework.
-
-Here’s the updated `README.md` with enhanced documentation:
-
 ---
 
 # LeanML: Lightweight Machine Learning Framework
@@ -259,4 +255,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-This `README.md` should now provide comprehensive guidance on the current features and usage of your LeanML framework, while also setting the stage for future development, including C++ bindings and additional machine learning capabilities.
