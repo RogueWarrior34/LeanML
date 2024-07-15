@@ -1,5 +1,3 @@
----
-
 # LeanML: Lightweight Machine Learning Framework
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/RogueWarrior34/LeanML)
@@ -7,214 +5,148 @@
 
 ## Overview
 
-**LeanML** is a C-based library designed for efficient machine learning operations, focusing on matrix and vector computations. This framework is in active development, with initial implementations targeting linear regression. Future updates will include C++ bindings for improved usability and integration.
+**LeanML** is a C-based library designed for efficient machine learning operations, focusing on matrix and vector computations. The framework includes robust implementations of linear regression, one-hot encoding, min-max scaling, and more. LeanML aims to provide a lightweight yet powerful toolkit for machine learning tasks with an emphasis on performance and ease of integration.
 
 ## Features
 
-- **Matrix Operations**: Create, manipulate, and manage matrices.
-- **Vector Operations**: Support row and column vectors with various operations.
-- **Data Loading**: Load data from CSV files into matrices.
+### Matrix Operations
+- **Creation and Destruction**: Create and destroy matrices.
+- **Element Access**: Get and set matrix elements.
+- **CSV Handling**: Load matrices from CSV files and write matrices to CSV files.
 - **Shuffling**: Shuffle matrix rows for data preprocessing.
-- **Basic Linear Regression**: Implementation of core linear regression components.
+- **Scaling**: Min-max scaling with methods to save and apply scaling parameters.
+- **Statistical Operations**: Retrieve minimum and maximum values within a matrix.
 
-## Getting Started
+### Vector Operations
+- **Creation and Destruction**: Create and destroy row and column vectors.
+- **Element Access**: Get and set vector elements.
+- **CSV Handling**: Load vectors from CSV files and write vectors to CSV files.
+- **Transpose**: Convert column vectors to row vectors and vice versa.
 
-### Prerequisites
+### Set Operations
+- **String Sets**: Create, destroy, add to, and retrieve elements from string sets.
 
-- A C compiler (e.g., GCC)
-- CMake (for build automation)
-- Git (for source code management)
+### Operations
+- **Matrix-Vector Multiplication**: Multiply matrices by vectors.
+- **Vector-Vector Operations**: Perform operations such as vector multiplication and subtraction.
 
-### Building the Project
+### Linear Regression
+- **Training**: Train linear regression models and generate parameters.
+- **Testing**: Test models with generated parameters and predict values.
+- **Interactive Application**: Predict new values using generated parameters interactively.
+- **Performance Metrics**: Calculate R2 score from results.
 
-1. **Clone the Repository**:
-    ```bash
-    git clone https://github.com/RogueWarrior34/LeanML
-    cd leanml
-    ```
+### Data Transformation Tools
+- **Encoding**: One-hot encoding for datasets containing string values.
+- **Scaling**: Min-max scaling for training and testing datasets.
+- **Dataset Splitting**: Create training and testing datasets from an original dataset.
 
-2. **Build with CMake**:
-    ```bash
-    mkdir build
-    cd build
-    cmake ..
-    make
-    ```
+## Directory Structure
 
-3. **Run the Example**:
-    ```bash
-    ./leanml_example
-    ```
+```
+LeanML/
+├── lml-framework/
+│   ├── include/
+│   │   ├── encoder/
+│   │   │   └── lml_data_encoder.h
+│   │   ├── matrix/
+│   │   │   ├── lml_mat_double.h
+│   │   │   └── lml_mat_string.h
+│   │   ├── operations/
+│   │   │   └── lml_operations_double.h
+│   │   ├── scale/
+│   │   │   └── lml_scale_double.h
+│   │   ├── set/
+│   │   │   └── lml_set_string.h
+│   │   ├── vector/
+│   │   │   └── lml_vec_double.h
+│   │   ├── lml_encoder.h
+│   │   ├── lml_matrix.h
+│   │   ├── lml_operations.h
+│   │   ├── lml_scale.h
+│   │   ├── lml_set.h
+│   │   └── lml_vector.h
+│   ├── lib/
+│   │   └── liblml.a
+│   ├── o_files/
+│   └── testcases/
+├── regression/
+│   ├── linear/
+│   │   ├── build/
+│   │   │   ├── train_it (executable)
+│   │   │   └── test_it (executable)
+│   │   ├── src/
+│   │   │   ├── train_it.c
+│   │   │   └── test_it.c
+│   │   └── datasets/
+├── tools/
+│   ├── build/
+│   │   ├── create_test_train_dataset (executable)
+│   │   ├── encode_dataset (executable)
+│   │   ├── r2score (executable)
+│   │   ├── scale_testing_dataset (executable)
+│   │   └── scale_training_dataset (executable)
+│   ├── src/
+│   │   ├── create_test_train_dataset.c
+│   │   ├── encode_dataset.c
+│   │   ├── r2score.c
+│   │   ├── scale_testing_dataset.c
+│   │   └── scale_training_dataset.c
+```
 
 ## Usage
 
-### Matrix Operations
+### Data Transformation Tools
 
-#### Creation and Destruction
-
-- **Create a Matrix**:
-    ```c
-    #include <mlfw_matrix.h>
-
-    mlfw_mat_double *matrix = mlfw_mat_double_create_new(3, 3);
-    if (matrix == NULL) {
-        printf("Matrix creation failed.\n");
-    }
+1. **Encode Dataset**:
+    ```bash
+    ./encode_dataset dataset_file_name encoded_dataset_file_name
     ```
 
-- **Destroy a Matrix**:
-    ```c
-    mlfw_mat_double_destroy(matrix);
+2. **Create Training and Testing Datasets**:
+    ```bash
+    ./create_test_train_dataset dataset_file_name test_dataset_file_name train_dataset_file_name split_percentage
     ```
 
-#### Accessing Elements
-
-- **Get and Set Matrix Elements**:
-    ```c
-    mlfw_mat_double_set(matrix, 0, 0, 1.0);
-    double value = mlfw_mat_double_get(matrix, 0, 0);
-    printf("Element at (0,0): %lf\n", value);
+3. **Scale Training Dataset**:
+    ```bash
+    ./scale_training_dataset input_file_name output_file_name from_column to_column min_max_file
     ```
 
-#### Matrix from CSV
-
-- **Load a Matrix from a CSV File**:
-    ```c
-    mlfw_mat_double *matrix = mlfw_mat_double_from_csv("data.csv");
-    if (matrix == NULL) {
-        printf("Failed to load matrix from CSV.\n");
-    }
+4. **Scale Testing Dataset**:
+    ```bash
+    ./scale_testing_dataset input_file_name output_file_name from_column to_column min_max_file
     ```
 
-#### Shuffling
+### Linear Regression
 
-- **Shuffle Rows of a Matrix**:
-    ```c
-    mlfw_mat_double *shuffled = mlfw_mat_double_shuffle(matrix, 3);
+1. **Train Model**:
+    ```bash
+    ./train_it dataset_name learning_rate history_size history_file_name parameter_file_name graph_file_name number_of_iterations (optional)
     ```
 
-#### Matrix to CSV
-
-- **Write Matrix to a CSV File**:
-    ```c
-    mlfw_mat_double_to_csv(matrix, "output.csv");
+2. **Test Model**:
+    ```bash
+    ./test_it dataset_name parameters_file_name results_file_name
     ```
 
-### Vector Operations
-
-#### Creation and Destruction
-
-- **Create a Column Vector**:
-    ```c
-    #include <mlfw_vector.h>
-
-    mlfw_column_vec_double *vector = mlfw_column_vec_double_create_new(3);
+3. **Calculate R2 Score**:
+    ```bash
+    ./r2score results_file_name
     ```
 
-- **Destroy a Column Vector**:
-    ```c
-    mlfw_column_vec_double_destroy(vector);
-    ```
-
-#### Accessing Elements
-
-- **Get and Set Vector Elements**:
-    ```c
-    mlfw_column_vec_double_set(vector, 0, 2.0);
-    double value = mlfw_column_vec_double_get(vector, 0);
-    printf("Element at index 0: %lf\n", value);
-    ```
-
-#### Vector Transpose
-
-- **Transpose Column Vector to Row Vector**:
-    ```c
-    mlfw_row_vec_double *row_vector = mlfw_column_vec_double_transpose(vector);
-    ```
-
-### Operations
-
-#### Matrix-Vector Multiplication
-
-- **Multiply Matrix by Column Vector**:
-    ```c
-    mlfw_column_vec_double *result = mlfw_mult_double_mat_cvec(matrix, vector);
-    ```
-
-#### Vector-Vector Operations
-
-- **Multiply Row Vector by Column Vector**:
-    ```c
-    mlfw_column_vec_double *product = mlfw_mult_double_rvec_cvec(row_vector, vector);
-    ```
-
-- **Subtract Column Vectors**:
-    ```c
-    mlfw_column_vec_double *difference = mlfw_subtract_double_column_vec(vector1, vector2);
-    ```
-
-### Linear Regression Example
-
-Here’s an example of using LeanML for linear regression:
-
-```c
-#include <mlfw_matrix.h>
-#include <mlfw_vector.h>
-#include <mlfw_operations.h>
-
-void train_it() {
-    // Load dataset
-    mlfw_mat_double *dataset = mlfw_mat_double_from_csv("dataset.csv");
-    if (dataset == NULL) {
-        printf("Unable to load dataset from CSV.\n");
-        return;
-    }
-
-    // Prepare matrices and vectors
-    dimension_t datasetRows, datasetColumns;
-    mlfw_mat_double_get_dimensions(dataset, &datasetRows, &datasetColumns);
-
-    mlfw_mat_double *I = mlfw_mat_double_create_new(datasetRows, datasetColumns);
-    mlfw_mat_double_copy(I, dataset, 0, 1, 0, 0, datasetRows - 1, datasetColumns - 1);
-    mlfw_mat_double_fill(I, 0, 0, datasetRows - 1, 0, 1.0);
-
-    mlfw_column_vec_double *A = mlfw_mat_double_create_column_vec(dataset, 1);
-    mlfw_column_vec_double *M = mlfw_column_vec_double_create_new_filled(datasetColumns, 0.0);
-
-    // Perform operations
-    mlfw_column_vec_double *P = mlfw_mult_double_mat_cvec(I, M);
-    mlfw_column_vec_double *E = mlfw_subtract_double_column_vec(P, A);
-
-    mlfw_row_vec_double *ET = mlfw_column_vec_double_transpose(E);
-    mlfw_column_vec_double *sum = mlfw_mult_double_rvec_cvec(ET, E);
-
-    double squared_sum = mlfw_column_vec_double_get(sum, 0);
-    double finalErrorValue = squared_sum / datasetRows;
-    printf("Final Error Value: %20.10lf\n", finalErrorValue);
-
-    // Release resources
-    mlfw_column_vec_double_destroy(A);
-    mlfw_column_vec_double_destroy(M);
-    mlfw_column_vec_double_destroy(P);
-    mlfw_column_vec_double_destroy(E);
-    mlfw_row_vec_double_destroy(ET);
-    mlfw_column_vec_double_destroy(sum);
-    mlfw_mat_double_destroy(I);
-    mlfw_mat_double_destroy(dataset);
-}
-
-int main() {
-    train_it();
-    return 0;
-}
-```
+4. **Predict New Values**:
+    - Use the provided interactive application for the IceCreamSales dataset:
+        ```bash
+        ./interactiveApp
+        ```
+    - You can create your own based on your needs by following the provided one as a guide.
 
 ## Future Plans
 
-1. **Complete Linear Regression**: Enhance linear regression with training loops and optimization techniques like gradient descent.
-2. **Develop C++ Bindings**: Create C++ bindings for a more user-friendly interface and integration with C++ projects.
-3. **Expand Operations**: Add more matrix and vector operations, such as matrix inversion, determinants, and advanced arithmetic functions.
-4. **Additional Algorithms**: Implement more machine learning algorithms, including logistic regression, k-means clustering, and more.
+1. **Develop C++ Bindings**: Create C++ bindings for better usability and integration.
+2. **Expand Operations**: Add more matrix and vector operations, such as matrix inversion, determinants, and advanced arithmetic functions.
+3. **Additional Algorithms**: Implement more machine learning algorithms, including logistic regression, k-means clustering, and more.
 
 ## Contributing
 
@@ -254,4 +186,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Inspired by various numerical and machine learning libraries.
 
 ---
-
