@@ -1,0 +1,1 @@
+gcc $1.c -I ../../../lml-framework/include -L ../../../lml-framework/lib -l lml -o ../build/$1 -Wall
